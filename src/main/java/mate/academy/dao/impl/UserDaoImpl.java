@@ -38,22 +38,17 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public Optional<User> findByLogin(String login) {
+    public Optional<User> findByEmail(String email) {
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             CriteriaBuilder cb = session.getCriteriaBuilder();
             CriteriaQuery<User> cq = cb.createQuery(User.class);
             Root<User> root = cq.from(User.class);
 
-            cq.select(root).where(cb.equal(root.get("login"), login));
+            cq.select(root).where(cb.equal(root.get("email"), email));
 
-            List<User> users = session.createQuery(cq).getResultList();
-
-            if (users.isEmpty()) {
-                return Optional.empty();
-            }
-            return Optional.of(users.get(0));
+            return session.createQuery(cq).uniqueResultOptional();
         } catch (Exception e) {
-            throw new DataProcessingException("Can't get a user by login: " + login, e);
+            throw new DataProcessingException("Can't get a user by email: " + email, e);
         }
 
     }

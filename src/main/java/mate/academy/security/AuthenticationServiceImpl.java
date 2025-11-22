@@ -15,20 +15,21 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private UserService userService;
 
     @Override
-    public void register(String login, String password) throws RegistrationException {
+    public User register(String email, String password) throws RegistrationException {
         try {
             User user = new User();
-            user.setLogin(login);
+            user.setEmail(email);
             user.setPassword(password);
             userService.add(user);
+            return user;
         } catch (Exception e) {
-            throw new RegistrationException("Can't register user with login: " + login);
+            throw new RegistrationException("Can't register user with email: " + email);
         }
     }
 
     @Override
-    public User login(String login, String password) throws AuthenticationException {
-        Optional<User> userFromDbOptional = userService.findByLogin(login);
+    public User login(String email, String password) throws AuthenticationException {
+        Optional<User> userFromDbOptional = userService.findByEmail(email);
         if (userFromDbOptional.isEmpty()) {
             throw new AuthenticationException("Can't find user from DB");
         }

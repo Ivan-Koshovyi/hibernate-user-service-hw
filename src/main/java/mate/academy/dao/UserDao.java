@@ -7,7 +7,7 @@ import mate.academy.model.User;
 public interface UserDao {
     User add(User user);
 
-    Optional<User> findByLogin(String login);
+    Optional<User> findByEmail(String login);
 
     List<User> getAll();
 }
