@@ -12,8 +12,9 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String email;
+    private String login;
     private String password;
+    private byte [] salt;
 
     public User() {
     }
@@ -26,12 +27,12 @@ public class User {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setLogin(String email) {
+        this.login = email;
     }
 
     public String getPassword() {
@@ -42,11 +43,19 @@ public class User {
         this.password = password;
     }
 
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(byte[] salt) {
+        this.salt = salt;
+    }
+
     @Override
     public String toString() {
         return "User{"
                 + "id=" + id
-                + ", email='" + email + '\''
+                + ", login='" + login + '\''
                 + ", password='" + password + '\''
                 + '}';
     }
